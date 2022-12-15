@@ -5,17 +5,26 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - DB_HOST=mysql:3306
+        - DB_USER=root
+        - DB_PASSWORD=my-secret-pw
     depends_on:
       - mysql
     ports:
-      - 8080:3000
+      - 8080:8080
 
   mysql:
     # container_name: mysql
     image: mysql:8.0
     volumes:
-      - ./mysql:/tmp/rustici/database
+      - dbdata:/var/lib/mysql
+      - ./mysql:/tmp/database
     ports:
       - 3306:3306
+    command: mysqld --init-file="/tmp/database/setup.sql"
     environment: 
       - MYSQL_ROOT_PASSWORD=my-secret-pw
+
+volumes:
+  dbdata:

@@ -1,35 +1,25 @@
-FROM tomcat:9
+FROM tomcat:8.0-jre8
 
-ARG RUSTICI=RusticiEngine_java_engine_21.1.19.412
-ARG MYSQL=mysql-connector-j-8.0.31
-
-# Install packages
-
-RUN apt update
-RUN apt install -y unzip
-
-# Copy var declarations
-ADD vars.sh vars.sh
-
-# Copy the Installer:
-ADD resources/${RUSTICI}.zip /
-RUN unzip /${RUSTICI}.zip -d /
+WORKDIR /rustici
 
 # Copy the WAR file in the webapps directory
-RUN cp /RusticiEngine/RusticiEngine.war /usr/local/tomcat/webapps
+ADD resources/rustici/RusticiEngine/RusticiEngine.war /usr/local/tomcat/webapps
 
 # Copy the properties file in the Tomcat lib directory
-RUN cp /RusticiEngine/Config/RusticiEngineSettings.properties /usr/local/tomcat/lib
+ADD resources/RusticiEngineSettings.properties /usr/local/tomcat/lib
 
-# Copy the MySQL JDBC Connector:
-ADD resources/${MYSQL}.zip /
-RUN unzip /${MYSQL}.zip -d /
-RUN cp  /${MYSQL}/${MYSQL}.jar /RusticiEngine/Installer/lib
+# Copy the customised installer (with the mySQL JAR) into the container
+ADD resources/rustici/RusticiEngine/Installer /RusticiEngine/Installer
 
-# Add the initialisation script:
-ADD resources/rusticiInit.sh /bin
+# Tomcat also needs access to the MySQL connector JAR
+RUN cp /RusticiEngine/Installer/lib/mysql-connector-*.jar /usr/local/tomcat/lib
+
+# Add the installer script
+ADD resources/installScript.sh .
+
+
 
 EXPOSE 8080
 
-# Run the initialisation script:
-CMD ["rusticiInit.sh"]
+# The 'run command', will install Rustici onto the database and start catalina
+ENTRYPOINT ["./installScript.sh"]
