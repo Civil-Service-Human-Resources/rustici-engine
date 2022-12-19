@@ -6,6 +6,7 @@ This repository contains the files required to build the CSL implementation of R
 
 - Azure CLI
 - Docker
+- Python3 (further Python requirements available in `requirements.txt`)
 
 ## Usage
 
@@ -28,6 +29,14 @@ To build the docker image, use a standard `docker build` command.
 
 A `docker-compose.yml` file has been provided to build the project via docker-compose; this will also build the MySQL image locally.
 
+## Rustici engine application
+
+Once the Docker container has been built and run, Rustici Engine will be available on the port provided to it. For example, using the `docker-compose.yml` will map Rustici engine to port 3000. Rustici engine will then be available on the `/RusticiEngine` endpoint. This can be tested by going to `/RusticiEngine/defaultui/admin` in the browser.
+
 ## Debugging
 
 Tomcat logs can be found in `/usr/local/tomcat/logs`. 
+
+Rustici logs can be analysed using the `cat /usr/local/tomcat/logs/rusticiengine.log` command inside the container.
+
+Rustici settings can be analysed using the `cat /usr/local/tomcat/lib/RusticiEngineSettings.properties` command inside the container.

@@ -5,14 +5,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        - DB_HOST=mysql:3306
-        - DB_USER=root
-        - DB_PASSWORD=my-secret-pw
+    env_file:
+      - ./env/rusticiLocalEnv
     depends_on:
       - mysql
+      - azurite
+      - csl-service
     ports:
-      - 8080:8080
+      - 3000:8080
 
   mysql:
     # container_name: mysql
@@ -26,5 +26,25 @@ services:
     environment: 
       - MYSQL_ROOT_PASSWORD=my-secret-pw
 
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    command: "azurite --loose --blobHost 0.0.0.0 --blobPort 9100 --queueHost 0.0.0.0 --location /workspace --debug /workspace/debug.log"
+    ports:
+      - 9100:9100
+    volumes:
+      - azurite:/workspace
+
+  # replace this with the actual csl-service when it's ready. For now,
+  # use a dummy endpoint to ensure that rollup data is being sent correctly.
+  csl-service:
+    build:
+      context: ./csl-service
+      dockerfile: Dockerfile
+    ports:
+      - 9003:9003
+    volumes:
+      - ./csl-service/app.py:/app/app.py
+
 volumes:
   dbdata:
+  azurite:

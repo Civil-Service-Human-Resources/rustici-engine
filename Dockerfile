@@ -6,7 +6,7 @@ WORKDIR /rustici
 ADD resources/rustici/RusticiEngine/RusticiEngine.war /usr/local/tomcat/webapps
 
 # Copy the properties file in the Tomcat lib directory
-ADD resources/RusticiEngineSettings.properties /usr/local/tomcat/lib
+ADD config/RusticiEngineSettings.properties /usr/local/tomcat/lib
 
 # Copy the customised installer (with the mySQL JAR) into the container
 ADD resources/rustici/RusticiEngine/Installer /RusticiEngine/Installer
@@ -15,9 +15,11 @@ ADD resources/rustici/RusticiEngine/Installer /RusticiEngine/Installer
 RUN cp /RusticiEngine/Installer/lib/mysql-connector-*.jar /usr/local/tomcat/lib
 
 # Add the installer script
-ADD resources/installScript.sh .
+ADD config/installScript.sh .
 
-
+# Provide permissions to the installer script and ensure LF endings
+RUN sed -i 's/\r$//' installScript.sh  && \  
+        chmod +x installScript.sh
 
 EXPOSE 8080
 
