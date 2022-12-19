@@ -24,11 +24,11 @@ steps:
     displayName: 'Install tools'
 
   - task: AzureCLI@2
+    displayName: 'Download required files'
     inputs:
       azureSubscription: 'CSL-production'
       scriptType: 'bash'
-      scriptLocation: 'scriptPath'
-      scriptPath: 'python build_files.py'
+      inlineScript: 'python ./build_files.py'
 
   - task: Docker@2
     inputs:
