@@ -1,11 +1,12 @@
 import os
 from azure.storage.blob import BlobServiceClient
 from azure.mgmt.storage import StorageManagementClient
+from azure.mgmt.subscription import SubscriptionClient
 import zipfile
 import shutil
 
 from azure_credential import get_credential
-from config import RESOURCES_DIR, SUBSCRIPTION_ID, TEMPLATES_DIR
+from config import RESOURCES_DIR, SUBSCRIPTION_ID, SUBSCRIPTION_NAME
 
 class File:
 	def __init__(self, zip_name, resources_dir, blob_container) -> None:
@@ -31,9 +32,18 @@ FILES = [
 ]
 
 
+def get_sub_id(credential, sub_name):
+	sub_client = SubscriptionClient(credential=credential)
+	matching_subs = [sub.subscription_id for sub in sub_client.subscriptions.list() if sub.display_name == sub_name]
+	if not matching_subs:
+		raise Exception(f"No matching subscriptions found with name {sub_name}")
+	return matching_subs[0]
+
+
 def get_blob_client():
 	credential = get_credential()
-	storage_client = StorageManagementClient(credential, subscription_id=SUBSCRIPTION_ID)
+	subscription_id = get_sub_id(credential, SUBSCRIPTION_NAME)
+	storage_client = StorageManagementClient(credential, subscription_id=subscription_id)
 	keys = storage_client.storage_accounts.list_keys(STORAGE_ACCOUNT_RESOURCE_GROUP, RUSTICI_SA_ACCOUNT_NAME)
 	keys = {v.key_name: v.value for v in keys.keys}
 	main_key = keys['key1']
