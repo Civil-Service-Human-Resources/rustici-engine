@@ -28,6 +28,7 @@ steps:
     inputs:
       azureSubscription: 'CSL-production'
       scriptType: 'bash'
+      scriptLocation: 'inlineScript'
       inlineScript: 'python ./build_files.py'
 
   - task: Docker@2
