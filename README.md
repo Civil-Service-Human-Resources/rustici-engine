@@ -33,10 +33,14 @@ A `docker-compose.yml` file has been provided to build the project via docker-co
 
 Once the Docker container has been built and run, Rustici Engine will be available on the port provided to it. For example, using the `docker-compose.yml` will map Rustici engine to port 3000. Rustici engine will then be available on the `/RusticiEngine` endpoint. This can be tested by going to `/RusticiEngine/defaultui/admin` in the browser.
 
+### Uploading courses
+
+This repository makes use of an Azurite Docker image to simulate a blob storage container locally. Unzipped SCORM files should be uploaded to this container before being uploaded to Rustici (via manifest import). The easiest way to do this is by using Azure Storage Explorer (https://azure.microsoft.com/en-us/products/storage/storage-explorer/); connect to the container locally and simply drag and drop the SCORM file into the `devstoreaccount1` account, under the `test` blob.
+
 ## Debugging
 
 Tomcat logs can be found in `/usr/local/tomcat/logs`. 
 
-Rustici logs can be analysed using the `cat /usr/local/tomcat/logs/rusticiengine.log` command inside the container.
+Rustici logs can be found using the `cat /usr/local/tomcat/logs/rusticiengine.log` command inside the container.
 
-Rustici settings can be analysed using the `cat /usr/local/tomcat/lib/RusticiEngineSettings.properties` command inside the container.
+Rustici settings can be found using the `cat /usr/local/tomcat/lib/RusticiEngineSettings.properties` command inside the container.

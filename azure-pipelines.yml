@@ -14,12 +14,9 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-  - task: AzureCLI@2
+  - task: PythonScript@0
     inputs:
-      scriptPath: './download-files.sh'
-      azureSubscription: 'CSL-Production'
-      scriptType: bash
-    displayName: 'Download required files'
+      scriptPath: './build_files.py'
 
   - task: Docker@2
     inputs:
