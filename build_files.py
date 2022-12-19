@@ -6,7 +6,7 @@ import zipfile
 import shutil
 
 from azure_credential import get_credential
-from config import RESOURCES_DIR, SUBSCRIPTION_ID, SUBSCRIPTION_NAME
+from config import RESOURCES_DIR, SUBSCRIPTION_NAME
 
 class File:
 	def __init__(self, zip_name, resources_dir, blob_container) -> None:
@@ -33,6 +33,7 @@ FILES = [
 
 
 def get_sub_id(credential, sub_name):
+	print(f"Getting Subscription ID for subscription {sub_name}")
 	sub_client = SubscriptionClient(credential=credential)
 	matching_subs = [sub.subscription_id for sub in sub_client.subscriptions.list() if sub.display_name == sub_name]
 	if not matching_subs:
