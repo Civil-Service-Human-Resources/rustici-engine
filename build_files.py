@@ -79,7 +79,14 @@ def copy_mysql_connector_jar():
 	shutil.copy2(mysql_jar, rustici_installer_lib)
 
 
+def create_required_dirs():
+	if not os.path.exists(RESOURCES_DIR):
+		print(f"Creating {RESOURCES_DIR}")
+		os.mkdir(RESOURCES_DIR)
+
+
 def run():
+	create_required_dirs()
 	print("Downloading necessary files")
 	for file in FILES:
 		download_and_unzip(file)
