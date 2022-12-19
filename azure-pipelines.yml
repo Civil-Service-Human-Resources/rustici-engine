@@ -14,9 +14,20 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.9'
+    displayName: 'Set Python version'
+
+  - script: python -m pip install -r requirements.txt
+    displayName: 'Install tools'
+    
   - task: PythonScript@0
     inputs:
+      scriptSource: 'filePath'
       scriptPath: './build_files.py'
+    displayName: 'Download required files from blob storage'
 
   - task: Docker@2
     inputs:
