@@ -1,0 +1,416 @@
+{
+	"info": {
+		"_postman_id": "82523db9-b740-40ff-ad5f-086b2af275d4",
+		"name": "Rustici",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "About",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{rustici_url}}/api/v2/about",
+					"host": [
+						"{{rustici_url}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"about"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get player config",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "EngineTenantName",
+						"value": "default",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{rustici_url}}/api/v2/player/configuration",
+					"host": [
+						"{{rustici_url}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"player",
+						"configuration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload course",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"import_job_id\", jsonData.result);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "EngineTenantName",
+						"type": "text",
+						"value": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"referenceRequest\": {\r\n        \"url\": \"{{local_cdn_url}}/{{courseID}}/imsmanifest.xml\",\r\n        \"webPathToCourse\": \"{{local_cdn_url}}/{{courseID}}\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{rustici_url}}/api/v2/courses?courseId={{courseID}}",
+					"host": [
+						"{{rustici_url}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"courses"
+					],
+					"query": [
+						{
+							"key": "courseId",
+							"value": "{{courseID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete course",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "EngineTenantName",
+						"type": "text",
+						"value": "default"
+					}
+				],
+				"url": {
+					"raw": "{{rustici_url}}/api/v2/courses/{{courseID}}",
+					"host": [
+						"{{rustici_url}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"courses",
+						"{{courseID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "EngineTenantName",
+						"type": "text",
+						"value": "default"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"courseId\": \"{{courseID}}\",\n    \"learner\": {\n        \"id\": \"testLearnerId\",\n        \"firstName\": \"First\",\n        \"lastName\": \"Last\"\n    },\n    \"registrationId\": \"{{registrationID}}\"\n}"
+				},
+				"url": {
+					"raw": "{{rustici_url}}/api/v2/registrations",
+					"host": [
+						"{{rustici_url}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"registrations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Registration with Launch Link Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "EngineTenantName",
+						"type": "text",
+						"value": "default"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"registration\": {\r\n    \"courseId\": \"{{courseID}}\",\r\n    \"learner\": {\r\n        \"id\": \"testLearnerId\",\r\n        \"firstName\": \"First\",\r\n        \"lastName\": \"Last\"\r\n    },\r\n    \"registrationId\": \"{{registrationID}}\"\r\n  },\r\n  \"launchLink\": {\r\n    \"redirectOnExitUrl\": \"https://example.org/myapp/courseDetail/12345\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "{{rustici_url}}/api/v2/registrations/withLaunchLink",
+					"host": [
+						"{{rustici_url}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"registrations",
+						"withLaunchLink"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Registration Launch Link",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "EngineTenantName",
+						"type": "text",
+						"value": "default"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"expiry\": 0,\r\n    \"redirectOnExitUrl\": \"https://example.org/myapp/courseDetail/12345\"\r\n}"
+				},
+				"url": {
+					"raw": "{{rustici_url}}/api/v2/registrations/{{registrationID}}/launchLink",
+					"host": [
+						"{{rustici_url}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"registrations",
+						"{{registrationID}}",
+						"launchLink"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get course configuration",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "engineTenantName",
+						"value": "default",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{rustici_url}}/api/v2/courses/{{courseID}}/configuration",
+					"host": [
+						"{{rustici_url}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"courses",
+						"{{courseID}}",
+						"configuration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get registration progress",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "engineTenantName",
+						"value": "default",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{rustici_url}}/api/v2/registrations/{{registrationID}}?includeChildResults=true&includeRuntime=true&includeInteractionsAndObjectives=true",
+					"host": [
+						"{{rustici_url}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"registrations",
+						"{{registrationID}}"
+					],
+					"query": [
+						{
+							"key": "includeChildResults",
+							"value": "true"
+						},
+						{
+							"key": "includeRuntime",
+							"value": "true"
+						},
+						{
+							"key": "includeInteractionsAndObjectives",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get registration launch history",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "engineTenantName",
+						"value": "default",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{rustici_url}}/api/v2/registrations/{{registrationID}}/launchHistory?includeHistoryLog=true",
+					"host": [
+						"{{rustici_url}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"registrations",
+						"{{registrationID}}",
+						"launchHistory"
+					],
+					"query": [
+						{
+							"key": "includeHistoryLog",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{rustici_password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{rustici_username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "courseID",
+			"value": "test_course"
+		},
+		{
+			"key": "registrationID",
+			"value": "registration_id"
+		}
+	]
+}
