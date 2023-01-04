@@ -61,6 +61,14 @@ services:
     volumes:
       - ./csl-service/app.py:/app/app.py
 
+  # Uncomment this when the actual csl-service is ready to receive connections from Rustici
+  # csl-service:
+  #   networks:
+  #     - network
+  #   image: lpgregistry.azurecr.io/csl-service:idt-develop
+  #   ports:
+  #     - 9003:9003
+
   nginx:
     container_name: nginx
     networks:

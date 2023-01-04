@@ -79,6 +79,12 @@ The container `setup-azurite` is used to create the necessary storage container 
 
 To connect to Azurite, first spin up the container using Docker compose - after this open Azure Storage Explorer and create a new connectiong under 'Local and Attached' using the connection string: `DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:9100/devstoreaccount1;Q` (from https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio#http-connection-strings)
 
+## csl-service
+
+**The current CSL service application is a PLACEHOLDER intended to receive POST requests from Rustici's rollUp data. The entry in the docker compose file should be replaced with the Azure image of CSL-Service when it is ready for development**
+
+CSL-Service is the business-logic layer within CSL. The existing Python app is intended to allow Rustici to post RollUp data from course engagement. The Python application will then print out some key details from the RollUp data for debugging purposes. The app itself is bound to the container via a volume, so can be edited on the host machine and redeployed if needs be. RollUp POST requests are stored in `req.json` in the root of the Dockerfile.
+
 ## Functionality
 
 ### Uploading courses
