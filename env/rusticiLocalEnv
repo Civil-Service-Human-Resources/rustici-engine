@@ -1,4 +1,6 @@
-CONNECTION_STRING="jdbc:mysql://mysql:3306/RusticiEngineDB?user=root&password=my-secret-pw|com.mysql.cj.jdbc.Driver"
+DB_HOST="mysql:3306"
+DB_USER="root"
+DB_PASSWORD="my-secret-pw"
 API_ACCOUNTS="apiuser : password"
 ENGINE_URL="http://csl.local/rustici/RusticiEngine"
 REDIRECT_ON_EXIT_URL="https://google.co.uk"
