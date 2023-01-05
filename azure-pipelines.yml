@@ -1,0 +1,43 @@
+trigger:
+  branches:
+    include:
+    - main
+    - idt-develop
+    - idt-feature-LC-*
+    - idt-release-v*
+    - idt-hotfix-v*
+  tags:
+    include:
+      - '*'
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.9'
+    displayName: 'Set Python version'
+
+  - script: python -m pip install -r requirements.txt
+    displayName: 'Install tools'
+
+  - task: AzureCLI@2
+    displayName: 'Download required files'
+    inputs:
+      azureSubscription: 'CSL-production'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: 'python ./build_files.py'
+
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'lpgregistry ACR'
+      ${{ if startsWith(variables['Build.SourceBranch'], 'refs/tags') }}:
+        repository: 'rustici-engine/prod'
+      ${{ else }}:
+        repository: 'rustici-engine/test'
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'
+      tags: '$(Build.SourceBranchName)'
