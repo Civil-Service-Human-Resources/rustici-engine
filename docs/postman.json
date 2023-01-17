@@ -214,7 +214,44 @@
 			"response": []
 		},
 		{
-			"name": "Get Registration with Launch Link Copy",
+			"name": "Delete registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "EngineTenantName",
+						"type": "text",
+						"value": "default"
+					}
+				],
+				"url": {
+					"raw": "{{rustici_url}}/api/v2/courses/{{courseID}}",
+					"host": [
+						"{{rustici_url}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"courses",
+						"{{courseID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Registration with Launch Link",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -232,7 +269,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"registration\": {\r\n    \"courseId\": \"{{courseID}}\",\r\n    \"learner\": {\r\n        \"id\": \"testLearnerId\",\r\n        \"firstName\": \"First\",\r\n        \"lastName\": \"Last\"\r\n    },\r\n    \"registrationId\": \"{{registrationID}}\"\r\n  }\r\n}"
+					"raw": "{\r\n  \"registration\": {\r\n    \"courseId\": \"{{courseID}}\",\r\n    \"learner\": {\r\n        \"id\": \"testLearnerId\",\r\n        \"firstName\": \"First\",\r\n        \"lastName\": \"Last\"\r\n    },\r\n    \"registrationId\": \"{{registrationID}}\"\r\n  },\r\n  \"launchLink\": {\r\n    \"redirectOnExitUrl\": \"https://google.co.uk\"\r\n  }\r\n}"
 				},
 				"url": {
 					"raw": "{{rustici_url}}/api/v2/registrations/withLaunchLink",
@@ -425,11 +462,11 @@
 	"variable": [
 		{
 			"key": "courseID",
-			"value": "bookmark"
+			"value": "managing_team_roles"
 		},
 		{
 			"key": "registrationID",
-			"value": "registration_id_2"
+			"value": "registration_id"
 		}
 	]
 }

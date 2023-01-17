@@ -99,7 +99,13 @@ After this, use the `POST {{rustici_url}}/api/v2/courses?courseId={{courseID}}` 
 
 ### Launching courses
 
-### Tracking courses
+First, use the `Get registration with launch link` endpoint to add a new registration, as well as generate a launch link specific to that registration.
+
+The launch link can then be pasted into a browser window and used to launch the course.
+
+### Tracking course data
+
+Rustici will send data to the CSL-Service application when interacting with SCORM files that have been launched using a launch link. This data will appear in the CSL-Service Docker logs.
 
 ## Debugging
 
@@ -110,3 +116,5 @@ Rustici logs can be found using the `cat /usr/local/tomcat/logs/rusticiengine.lo
 Rustici settings can be found using the `cat /usr/local/tomcat/lib/RusticiEngineSettings.properties` command inside the container.
 
 NGINX access logs can be found using `cat /var/log/nginx/access.log` command inside the container.
+
+CSL-Service (Python app) RollUp requests that have been received are stored in `/req.json`
