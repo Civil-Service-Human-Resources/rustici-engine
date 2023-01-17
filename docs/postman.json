@@ -25,6 +25,25 @@
 			"response": []
 		},
 		{
+			"name": "Ping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{rustici_url}}/api/v2/about",
+					"host": [
+						"{{rustici_url}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"about"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get player config",
 			"request": {
 				"method": "POST",
@@ -213,7 +232,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"registration\": {\r\n    \"courseId\": \"{{courseID}}\",\r\n    \"learner\": {\r\n        \"id\": \"testLearnerId\",\r\n        \"firstName\": \"First\",\r\n        \"lastName\": \"Last\"\r\n    },\r\n    \"registrationId\": \"{{registrationID}}\"\r\n  },\r\n  \"launchLink\": {\r\n    \"redirectOnExitUrl\": \"https://example.org/myapp/courseDetail/12345\"\r\n  }\r\n}"
+					"raw": "{\r\n  \"registration\": {\r\n    \"courseId\": \"{{courseID}}\",\r\n    \"learner\": {\r\n        \"id\": \"testLearnerId\",\r\n        \"firstName\": \"First\",\r\n        \"lastName\": \"Last\"\r\n    },\r\n    \"registrationId\": \"{{registrationID}}\"\r\n  }\r\n}"
 				},
 				"url": {
 					"raw": "{{rustici_url}}/api/v2/registrations/withLaunchLink",
@@ -249,7 +268,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"expiry\": 0,\r\n    \"redirectOnExitUrl\": \"https://example.org/myapp/courseDetail/12345\"\r\n}"
+					"raw": "{\r\n    \"expiry\": 0\r\n}"
 				},
 				"url": {
 					"raw": "{{rustici_url}}/api/v2/registrations/{{registrationID}}/launchLink",
@@ -406,11 +425,11 @@
 	"variable": [
 		{
 			"key": "courseID",
-			"value": "test_course"
+			"value": "bookmark"
 		},
 		{
 			"key": "registrationID",
-			"value": "registration_id"
+			"value": "registration_id_2"
 		}
 	]
 }
