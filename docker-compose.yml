@@ -70,7 +70,6 @@ services:
   #     - 9003:9003
 
   nginx:
-    container_name: nginx
     networks:
         network:
           aliases:
