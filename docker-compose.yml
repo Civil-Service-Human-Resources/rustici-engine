@@ -14,7 +14,7 @@ services:
       - azurite
       - csl-service
     ports:
-      - 3000:8080
+      - 3000:8000
     volumes:
       - ./config/RusticiEngineSettings.properties:/usr/local/tomcat/lib/RusticiEngineSettings.properties
   

@@ -43,7 +43,7 @@ ADD config/installScript.sh .
 RUN sed -i 's/\r$//' installScript.sh  && \  
         chmod +x installScript.sh
 
-EXPOSE 8080
+EXPOSE 8000
 
 # The 'run command', will install Rustici onto the database and start catalina
 ENTRYPOINT ["./installScript.sh"]
