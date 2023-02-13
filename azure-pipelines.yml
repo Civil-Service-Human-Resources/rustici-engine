@@ -33,11 +33,11 @@ steps:
 
   - task: Docker@2
     inputs:
-      containerRegistry: 'lpgregistry ACR'
       ${{ if startsWith(variables['Build.SourceBranch'], 'refs/tags') }}:
-        repository: 'rustici-engine/prod'
+        containerRegistry: 'csl production ACR'
       ${{ else }}:
-        repository: 'rustici-engine/test'
+        containerRegistry: 'csl staging ACR'
+      repository: 'rustici-engine'
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'
       tags: '$(Build.SourceBranchName)'
