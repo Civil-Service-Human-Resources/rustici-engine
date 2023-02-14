@@ -10,6 +10,10 @@ trigger:
     include:
       - '*'
 
+variables:
+  - name: acr_repo
+    value: rustici-engine
+
 pool:
   vmImage: ubuntu-latest
 
@@ -37,7 +41,7 @@ steps:
         containerRegistry: 'csl production ACR'
       ${{ else }}:
         containerRegistry: 'csl staging ACR'
-      repository: 'rustici-engine'
+      repository: '${{ variables.acr_repo }}'
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'
       tags: '$(Build.SourceBranchName)'
