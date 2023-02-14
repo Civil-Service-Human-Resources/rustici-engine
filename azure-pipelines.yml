@@ -47,12 +47,3 @@ steps:
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'
       tags: '$(Build.SourceBranchName)'
-
-  - task: PublishPipelineArtifact@1
-    displayName: Publish artifact
-    inputs:
-      targetPath: $(System.DefaultWorkingDirectory)/Dockerfile
-      ${{ if startsWith(variables['Build.SourceBranch'], 'refs/tags') }}:
-        artifactName: 'prod'
-      ${{ else }}:
-        artifactName: 'staging'
