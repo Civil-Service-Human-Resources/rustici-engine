@@ -1,4 +1,4 @@
-name: '$(SourceBranchName)-$(Rev:.r)'
+name: '${{ variables.acr_repo }}.$(SourceBranchName).$(Rev)'
 
 trigger:
   branches:
