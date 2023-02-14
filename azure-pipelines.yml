@@ -45,7 +45,7 @@ steps:
   - task: Docker@2
     inputs:
       containerRegistry: 'lpgregistry ACR'
-      repository: '${{ variables.acr_repo }}/${{acr_repo_suffix}}'
+      repository: '${{ variables.acr_repo }}/${{ variables.acr_repo_suffix }}'
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'
       tags: '$(Build.SourceBranchName)'
