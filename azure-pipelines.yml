@@ -51,6 +51,6 @@ steps:
     inputs:
       targetPath: $(System.DefaultWorkingDirectory)/Dockerfile
       ${{ if startsWith(variables['Build.SourceBranch'], 'refs/tags') }}:
-        artifactName: '${{ variables.acr_repo }}/prod'
+        artifactName: 'prod'
       ${{ else }}:
-        artifactName: '${{ variables.acr_repo }}/test'
+        artifactName: 'staging'
