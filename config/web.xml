@@ -624,7 +624,7 @@
     <!-- Note: the CORS_* comments surrounding this section need to be left intact
                so the entrypoint script can deactivate Cors settings if DISABLE_CORS is set -->
     <!-- CORS_START -->
-    <filter>
+    <!-- <filter>
         <filter-name>CorsFilter</filter-name>
         <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
         <init-param>
@@ -636,7 +636,7 @@
     <filter-mapping>
         <filter-name>CorsFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping> -->
     <!-- CORS_END -->
 
   <!-- ==================== Default Session Configuration ================= -->
