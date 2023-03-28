@@ -1,7 +1,7 @@
 CONNECTION_STRING="jdbc:mysql://mysql:3306/RusticiEngineDB?user=root&password=my-secret-pw|com.mysql.cj.jdbc.Driver"
 RUSTICI_USERNAME="apiuser"
 RUSTICI_PASSWORD="password"
-RUSTICI_URL="http://csl.local/rustici/RusticiEngine"
+RUSTICI_URL="http://csl.local/rustici"
 CSL_HOMEPAGE="http://localhost:3001"
 REDIRECT_ON_EXIT_URL="https://google.co.uk"
 CDN_URL="http://csl.local/azurite/devstoreaccount1/azurite"
