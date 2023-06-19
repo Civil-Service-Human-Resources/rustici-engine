@@ -1,0 +1,49 @@
+trigger:
+  branches:
+    include:
+    - main
+    - idt-develop
+    - idt-feature-LC-*
+    - idt-release-v*
+    - idt-hotfix-v*
+  tags:
+    include:
+      - '*'
+
+variables:
+  - name: acr_repo_suffix
+    ${{ if startsWith(variables['Build.SourceBranch'], 'refs/tags') }}:
+      value: 'prod'
+    ${{ else }}:
+      value: 'test'
+
+name: '$(SourceBranchName)-$(Rev:r)'
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.9'
+    displayName: 'Set Python version'
+
+  - script: python -m pip install -r requirements.txt
+    displayName: 'Install tools'
+
+  - task: AzureCLI@2
+    displayName: 'Download required files'
+    inputs:
+      azureSubscription: 'CSL-production'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: 'python ./build_files.py'
+
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'lpgregistry ACR'
+      repository: 'rustici-engine/${{ variables.acr_repo_suffix }}'
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'
+      tags: '$(Build.SourceBranchName)'
