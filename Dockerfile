@@ -1,4 +1,4 @@
-FROM tomcat:10.1.40-jdk11
+FROM tomcat:9.0.104-jdk8-corretto
 
 WORKDIR /rustici
 
