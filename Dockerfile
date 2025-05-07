@@ -1,4 +1,4 @@
-FROM tomcat:9.0.86-jdk8-corretto-al2
+FROM tomcat:11.0.6-jre21-temurin-noble
 
 WORKDIR /rustici
 
